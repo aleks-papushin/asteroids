@@ -2,39 +2,32 @@
 
 public class HandleBorders : MonoBehaviour
 {
-    Camera cam;
-    float horizontalBound;
-    float verticalBound;
-    Vector3 screenBorders;
+    GameManager gameManager;
 
     void Start()
     {
-        cam = Camera.main;
-        // gets position of camera right top point 
-        screenBorders = cam.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
-        horizontalBound = screenBorders.x;
-        verticalBound = screenBorders.y;
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     void Update()
     {
-        if (transform.position.x > horizontalBound)
+        if (transform.position.x > gameManager.horizontalBound)
         {
-            transform.position = new Vector3(-horizontalBound, transform.position.y, 0);
+            transform.position = new Vector3(-gameManager.horizontalBound, transform.position.y, 0);
         }
-        else if (transform.position.x < -horizontalBound)
+        else if (transform.position.x < -gameManager.horizontalBound)
         {
-            transform.position = new Vector3(horizontalBound, transform.position.y, 0);
-        }
-
-        else if (transform.position.y > verticalBound)
-        {
-            transform.position = new Vector3(transform.position.x, -verticalBound, 0);
+            transform.position = new Vector3(gameManager.horizontalBound, transform.position.y, 0);
         }
 
-        else if (transform.position.y < -verticalBound)
+        else if (transform.position.y > gameManager.verticalBound)
         {
-            transform.position = new Vector3(transform.position.x, verticalBound, 0);
+            transform.position = new Vector3(transform.position.x, -gameManager.verticalBound, 0);
+        }
+
+        else if (transform.position.y < -gameManager.verticalBound)
+        {
+            transform.position = new Vector3(transform.position.x, gameManager.verticalBound, 0);
         }
     }
 }
