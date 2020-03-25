@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class DestroyOnCollision : MonoBehaviour
+public class CollisionWithAsteroids : MonoBehaviour
 {
     SpawnAsteroids spawner;
 
