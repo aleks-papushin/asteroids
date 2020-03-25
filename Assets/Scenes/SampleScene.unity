@@ -410,7 +410,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   count: 10
-  asteroid: {fileID: 4995731562555892476, guid: 91a0b4b90bcb7c84599923db3b1e15b3,
+  asteroidBig: {fileID: 4995731562555892476, guid: 91a0b4b90bcb7c84599923db3b1e15b3,
+    type: 3}
+  asteroidMiddle: {fileID: 4995731562555892476, guid: 88842aea2d8d56e4fbdf5c4f72ac401c,
+    type: 3}
+  asteroidSmall: {fileID: 4995731562555892476, guid: ebd0e2cfec6231c408936f834b7892b0,
     type: 3}
 --- !u!4 &1410987521
 Transform:

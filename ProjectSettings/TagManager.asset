@@ -4,6 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - Asteroid_big
+  - Asteroid_middle
+  - Asteroid_small
   - Asteroid
   layers:
   - Default

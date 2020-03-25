@@ -13,21 +13,21 @@ public class HandleBorders : MonoBehaviour
     {
         if (transform.position.x > gameManager.horizontalBound)
         {
-            transform.position = new Vector3(-gameManager.horizontalBound, transform.position.y, 0);
+            transform.position = new Vector2(-gameManager.horizontalBound, transform.position.y);
         }
         else if (transform.position.x < -gameManager.horizontalBound)
         {
-            transform.position = new Vector3(gameManager.horizontalBound, transform.position.y, 0);
+            transform.position = new Vector2(gameManager.horizontalBound, transform.position.y);
         }
 
         else if (transform.position.y > gameManager.verticalBound)
         {
-            transform.position = new Vector3(transform.position.x, -gameManager.verticalBound, 0);
+            transform.position = new Vector2(transform.position.x, -gameManager.verticalBound);
         }
 
         else if (transform.position.y < -gameManager.verticalBound)
         {
-            transform.position = new Vector3(transform.position.x, gameManager.verticalBound, 0);
+            transform.position = new Vector2(transform.position.x, gameManager.verticalBound);
         }
     }
 }

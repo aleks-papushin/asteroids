@@ -4,7 +4,9 @@ public class SpawnAsteroids : MonoBehaviour
 {
     public int count;
 
-    public GameObject asteroid;
+    public GameObject asteroidBig;
+    public GameObject asteroidMiddle;
+    public GameObject asteroidSmall;
 
     GameManager gameManager;
 
@@ -13,23 +15,43 @@ public class SpawnAsteroids : MonoBehaviour
     {
         gameManager = FindObjectOfType<GameManager>();
 
+        Spawn(asteroidBig, count);
+    }
+
+    public void SpawnMedium(int count, Vector2 position)
+    {
+        Spawn(asteroidMiddle, count, position);
+    }
+
+    public void SpawnSmall(int count, Vector2 position)
+    {
+        Spawn(asteroidSmall, count, position);
+    }
+
+    private void Spawn(GameObject asteroid, int count, Vector2? position = null)
+    {
+        bool isGeneratePosition = false;
+
+        if (position == null)
+        {
+            isGeneratePosition = true;
+        }
+
         for (int i = 0; i < count; i++)
         {
-            Instantiate(asteroid, GetRandomPosition(), asteroid.transform.rotation);
+            if (isGeneratePosition)
+            {
+                position = GetRandomPosition();
+            }
+
+            Instantiate(asteroid, (Vector2) position, asteroidBig.transform.rotation);
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    private Vector2 GetRandomPosition()
     {
-        
-    }
-
-    private Vector3 GetRandomPosition()
-    {
-        return new Vector3(
+        return new Vector2(
             Random.Range(-gameManager.horizontalBound, gameManager.horizontalBound),
-            Random.Range(-gameManager.verticalBound, gameManager.verticalBound), 
-            0);
+            Random.Range(-gameManager.verticalBound, gameManager.verticalBound));
     }   
 }
