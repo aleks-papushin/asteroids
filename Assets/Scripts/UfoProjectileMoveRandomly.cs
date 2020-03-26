@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class UfoProjectileRandomMovement : MonoBehaviour
+public class UfoProjectileMoveRandomly : MonoBehaviour
 {
     public float speed;
 

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class ShootingRandomly : MonoBehaviour
+public class SpawnProjectile : MonoBehaviour
 {
     public GameObject ufoProjectile;
 
