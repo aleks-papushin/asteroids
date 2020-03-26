@@ -5,21 +5,21 @@ public class UfoMoving : MonoBehaviour
 {
     public float speed;
     public float changingDirectionTimeout;
-    bool shouldChangeDirection = false;
 
-    int movementXDirection;
-    float[] yAngles = new float[] { -0.5f, 0, 0.5f };
+    bool pickNewDirection = true;
+    int xDirection;
+    float[] yAngles = new float[] { -0.5f, 0.5f, 0 };
     Vector2 movement;
     float xMovement;
-    float yMovement;
-
+    float? yMovement = null;
 
     // Start is called before the first frame update
     void Start()
     {
         // choose direction opposite to side you've appeared    
-        movementXDirection = transform.position.x < 0 ? 1 : -1;
-        xMovement = 0.5f * movementXDirection;        
+        xDirection = transform.position.x < 0 ? 1 : -1;
+        xMovement = 0.5f * xDirection;
+        
         CalculateMovement();        
     }
 
@@ -31,27 +31,46 @@ public class UfoMoving : MonoBehaviour
 
     void Move()
     {   
-        transform.Translate(movement * speed * Time.deltaTime);
-
-        if (shouldChangeDirection)
-        {
+        if (pickNewDirection)
+        {            
             CalculateMovement();            
         }
+
+        transform.Translate(movement * speed * Time.deltaTime);
     }
 
     // accidentally move by 45 degree for a a couple of seconds, than move horizontally again
     private IEnumerator WaitTimeout()
     {
-        yield return new WaitForSeconds(changingDirectionTimeout);
-        shouldChangeDirection = true;
+        yield return new WaitForSeconds(changingDirectionTimeout);        
+        pickNewDirection = true;
     }
 
     private void CalculateMovement()
     {
-        yMovement = yAngles[Random.Range(0, yAngles.Length)];
-        movement = new Vector2(xMovement, yMovement);
+        GetYDirection();
+        movement = new Vector2(xMovement, (float)yMovement);
         movement.Normalize();
-        shouldChangeDirection = false;
+        pickNewDirection = false;
         StartCoroutine(WaitTimeout());
+    }
+
+    private void GetYDirection()
+    {
+        // if null pick any value        
+        if (yMovement == null)
+        {
+            yMovement = yAngles[Random.Range(0, yAngles.Length)];
+        }
+        // if zero pick any value except 0 (the last array member)
+        else if (yMovement == 0)
+        {            
+            yMovement = yAngles[Random.Range(0, yAngles.Length - 1)];
+        }
+        // if 0.5 or -0.5 or other, make 0
+        else 
+        {
+            yMovement = 0;
+        }
     }
 }
