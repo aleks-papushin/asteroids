@@ -1,11 +1,18 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public TextMeshProUGUI scoreTextMesh;
+    public TextMeshProUGUI livesTextMesh;
+
     Camera cam;
     public float horizontalBound;
     public float verticalBound;
     Vector2 screenBorders;
+
+    private int score;
+    private int lives;
 
     // Start is called before the first frame update
     void Start()
@@ -21,5 +28,17 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void UpdateScore(int addScore)
+    {
+        score += addScore;
+        scoreTextMesh.text = $"Score: {score}";
+    }
+
+    public void SetLives(int lives)
+    {
+        this.lives = lives;
+        livesTextMesh.text = $"Lives: {this.lives}";
     }
 }
