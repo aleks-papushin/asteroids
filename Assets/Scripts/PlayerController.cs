@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
         HandleShooting();
     }
 
-    void HandleShooting()
+    private void HandleShooting()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {

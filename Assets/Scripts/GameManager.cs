@@ -11,8 +11,9 @@ public class GameManager : MonoBehaviour
     public float verticalBound;
     Vector2 screenBorders;
 
+    public int Lives { get; set; } = 3;
     private int score;
-    private int lives;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +23,8 @@ public class GameManager : MonoBehaviour
         screenBorders = cam.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
         horizontalBound = screenBorders.x;
         verticalBound = screenBorders.y;
+
+        SetLives(Lives);
     }
 
     // Update is called once per frame
@@ -38,7 +41,7 @@ public class GameManager : MonoBehaviour
 
     public void SetLives(int lives)
     {
-        this.lives = lives;
-        livesTextMesh.text = $"Lives: {this.lives}";
+        Lives = lives;
+        livesTextMesh.text = $"Lives: {Lives}";
     }
 }

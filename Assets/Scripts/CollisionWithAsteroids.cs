@@ -2,11 +2,13 @@
 
 public class CollisionWithAsteroids : MonoBehaviour
 {
+    GameManager game;
     SpawnAsteroids spawner;
 
     void Start()
     {
         spawner = FindObjectOfType<SpawnAsteroids>();
+        game = FindObjectOfType<GameManager>();
     }
 
     void Update()
@@ -31,6 +33,24 @@ public class CollisionWithAsteroids : MonoBehaviour
 
             Destroy(other.gameObject);
 
+            HandleMyDamage();            
+        }
+    }
+
+    private void HandleMyDamage()
+    {
+        if (gameObject.CompareTag("Player"))
+        {
+            var lives = game.Lives - 1;
+            game.SetLives(lives);
+
+            if (game.Lives == 0)
+            {
+                Destroy(gameObject);
+            }
+        }
+        else
+        {
             Destroy(gameObject);
         }
     }
