@@ -15,7 +15,6 @@ public class GameManager : MonoBehaviour
     private const int initLifesCount = 3000;
     private int score;    
     private int addLiveOn = 10000;
-    
 
     // Start is called before the first frame update
     void Start()
@@ -43,10 +42,16 @@ public class GameManager : MonoBehaviour
 
     public void UpdateScore(int addScore)
     {
-        Debug.Log($"In UpdateScore");
         score += addScore;
         HandleBonusLife();
         scoreTextMesh.text = $"Score: {score}";
+    }
+
+    public Vector2 GetRandomPosition()
+    {
+        return new Vector2(
+            Random.Range(-horizontalBound, horizontalBound),
+            Random.Range(-verticalBound, verticalBound));
     }
 
     private void HandleBonusLife()

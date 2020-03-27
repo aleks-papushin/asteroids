@@ -41,17 +41,10 @@ public class SpawnAsteroids : MonoBehaviour
         {
             if (isGeneratePosition)
             {
-                position = GetRandomPosition();
+                position = gameManager.GetRandomPosition();
             }
 
             Instantiate(asteroid, (Vector2) position, asteroidBig.transform.rotation);
         }
     }
-
-    private Vector2 GetRandomPosition()
-    {
-        return new Vector2(
-            Random.Range(-gameManager.horizontalBound, gameManager.horizontalBound),
-            Random.Range(-gameManager.verticalBound, gameManager.verticalBound));
-    }   
 }
