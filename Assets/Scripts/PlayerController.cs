@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
 
     float rotationSpeed = 200.0f;
     float engineForce = 2f;
+    float timeoutBeforeTeleporting = 0.6f;
+    bool canTeleport = true;
 
     void Start()
     {
@@ -38,11 +40,34 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            var newPos = gameManager.GetRandomPosition();                        
-            transform.position = newPos;
-            rig.velocity = Vector2.zero;
-            rig.angularVelocity = 0f;
+            if (canTeleport)
+            {
+                canTeleport = false;
+                StartCoroutine(Teleport());
+            }
         }
+    }
+
+    private IEnumerator Teleport()
+    {
+        // disappear player
+        GetComponent<Collider2D>().enabled = false;
+        GetComponent<SpriteRenderer>().enabled = false;
+
+        // wait for timeout
+        yield return new WaitForSeconds(timeoutBeforeTeleporting);
+
+        // appear at new pos        
+        var newPos = gameManager.GetRandomPosition();
+        transform.position = newPos;
+        rig.velocity = Vector2.zero;
+        rig.angularVelocity = 0f;
+
+        // show player
+        GetComponent<SpriteRenderer>().enabled = true;
+        GetComponent<Collider2D>().enabled = true;        
+
+        canTeleport = true;
     }
 
     private void HandleShooting()
