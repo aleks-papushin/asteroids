@@ -456,7 +456,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48607d858c9f9e7468b979dd62907614, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  count: 10
+  count: 1
   asteroidBig: {fileID: 4995731562555892476, guid: 91a0b4b90bcb7c84599923db3b1e15b3,
     type: 3}
   asteroidMiddle: {fileID: 4995731562555892476, guid: 88842aea2d8d56e4fbdf5c4f72ac401c,
@@ -712,7 +712,7 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 24.643036, y: 16.42871, z: 0, w: 0}
+  m_margin: {x: 24.643036, y: 16.42871, z: -199.02606, w: 0}
   m_textInfo:
     textComponent: {fileID: 1529837433}
     characterCount: 8
@@ -933,7 +933,7 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 26.285889, y: -6.5893555, z: -4.9286194, w: 6.589386}
+  m_margin: {x: 26.285889, y: -6.5893555, z: -199.41528, w: 6.589386}
   m_textInfo:
     textComponent: {fileID: 1840508398}
     characterCount: 8

@@ -11,8 +11,10 @@ public class GameManager : MonoBehaviour
     public float verticalBound;
     Vector2 screenBorders;
 
-    public int Lives { get; set; } = 3;
-    private int score;
+    public int Lives { get; private set; }
+    private const int initLifesCount = 3000;
+    private int score;    
+    private int addLiveOn = 10000;
     
 
     // Start is called before the first frame update
@@ -24,7 +26,7 @@ public class GameManager : MonoBehaviour
         horizontalBound = screenBorders.x;
         verticalBound = screenBorders.y;
 
-        SetLives(Lives);
+        AddLives(initLifesCount);
     }
 
     // Update is called once per frame
@@ -33,15 +35,26 @@ public class GameManager : MonoBehaviour
         
     }
 
+    public void AddLives(int addLives)
+    {
+        this.Lives += addLives;
+        livesTextMesh.text = $"Lives: {this.Lives}";
+    }
+
     public void UpdateScore(int addScore)
     {
+        Debug.Log($"In UpdateScore");
         score += addScore;
+        HandleBonusLife();
         scoreTextMesh.text = $"Score: {score}";
     }
 
-    public void SetLives(int lives)
-    {
-        Lives = lives;
-        livesTextMesh.text = $"Lives: {Lives}";
+    private void HandleBonusLife()
+    {        
+        if (score - addLiveOn >= 0)
+        {
+            AddLives(1);
+            addLiveOn += 10000;
+        }
     }
 }
