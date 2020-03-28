@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6855450692512134502}
   - component: {fileID: 1814880824085970990}
+  - component: {fileID: -4040100694807456896}
   - component: {fileID: 859543651900599490}
   - component: {fileID: 2049226467376725991}
   - component: {fileID: 4157434037643177621}
@@ -18,7 +19,7 @@ GameObject:
   - component: {fileID: 6351941304094449423}
   m_Layer: 0
   m_Name: Ufo_small
-  m_TagString: Ufo
+  m_TagString: Ufo_small
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -87,6 +88,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!50 &-4040100694807456896
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3971331808000090301}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!60 &859543651900599490
 PolygonCollider2D:
   m_ObjectHideFlags: 0

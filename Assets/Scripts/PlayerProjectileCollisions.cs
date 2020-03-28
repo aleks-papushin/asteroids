@@ -26,7 +26,12 @@ public class PlayerProjectileCollisions : MonoBehaviour
             {
                 spawner.SpawnSmall(2, other.transform.position);
             }
-
+            HandleScore(other);
+            Destroy(other.gameObject);
+            Destroy(gameObject);
+        }
+        else if (otherTag.Contains("Ufo"))
+        {
             HandleScore(other);
             Destroy(other.gameObject);
             Destroy(gameObject);
