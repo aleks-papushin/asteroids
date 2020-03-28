@@ -28,12 +28,6 @@ public class GameManager : MonoBehaviour
         AddLives(initLifesCount);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void AddLives(int addLives)
     {
         this.Lives += addLives;
@@ -58,8 +52,7 @@ public class GameManager : MonoBehaviour
     {
         this.AddLives(-1);
 
-        // teleport player to center, orient up
-        StartCoroutine(player.GetComponent<PlayerController>().Teleport(lifeWasLost: true));
+        StartCoroutine(player.GetComponent<PlayerController>().Teleport(isLifeLost: true));
 
         if (Lives == 0)
         {

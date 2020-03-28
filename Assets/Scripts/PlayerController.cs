@@ -32,20 +32,6 @@ public class PlayerController : MonoBehaviour
         HandleMoving();
         HandleShooting();
         HandleTeleport();
-        HandleBlinking();
-    }
-
-    private void HandleBlinking()
-    {
-        if (isInvincible)
-        {
-            blinkingTimer += Time.deltaTime;
-            if (blinkingTimer > blinkingInterval)
-            {
-                sprite.enabled = !sprite.enabled;
-                blinkingTimer = 0;
-            }
-        }
     }
 
     private void HandleMoving()
@@ -66,7 +52,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public IEnumerator Teleport(bool lifeWasLost = false)
+    public IEnumerator Teleport(bool isLifeLost = false)
     {
         canTeleport = false;
 
@@ -78,7 +64,7 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(timeoutBeforeTeleporting);
 
         // appear at new pos
-        if (lifeWasLost) 
+        if (isLifeLost) 
         {
             isInvincible = true;
             transform.position = Vector2.zero;
@@ -96,8 +82,7 @@ public class PlayerController : MonoBehaviour
 
         // show player, handle invincibility (be invincible if life was lost)
         if (isInvincible)
-        {
-            Debug.Log($"Inside if (isInvincible) before StartCoroutine(BeInvincible()). isInvincible: {isInvincible}");            
+        {        
             StartCoroutine(BeInvincible());
         }
         else
@@ -111,7 +96,7 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator BeInvincible()
     {
-        Debug.Log($"Inside BeInvincible. isInvincible: {isInvincible}");
+        StartCoroutine(SpriteBlink());
 
         yield return new WaitForSeconds(invincibilityTimeout);
 
@@ -121,6 +106,23 @@ public class PlayerController : MonoBehaviour
         GetComponent<Collider2D>().enabled = true;
                 
         canTeleport = true;
+    }
+
+    private IEnumerator SpriteBlink()
+    {
+        while (isInvincible)
+        {
+            blinkingTimer += Time.deltaTime;
+            if (blinkingTimer > blinkingInterval)
+            {
+                sprite.enabled = !sprite.enabled;
+                blinkingTimer = 0;
+            }
+
+            yield return null;
+        }
+
+        yield return null;
     }
 
     private void HandleShooting()
