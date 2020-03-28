@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     public int Lives { get; private set; }
     private const int initLifesCount = 3000;
     private int score;    
-    private int addLiveOn = 10000;
+    private int addLifeOn = 10000;
 
     // Start is called before the first frame update
     void Start()
@@ -66,10 +66,10 @@ public class GameManager : MonoBehaviour
 
     private void HandleBonusLife()
     {        
-        if (score - addLiveOn >= 0)
+        if (score >= addLifeOn)
         {
             AddLives(1);
-            addLiveOn += 10000;
+            addLifeOn += 10000;
         }
     }
 }
