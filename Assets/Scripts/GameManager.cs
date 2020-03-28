@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    SpawnAsteroids spawner;
+    SpawnAsteroids asteroidsSpawner;
+    SpawnUfo ufoSpawner;
 
     public TextMeshProUGUI scoreTextMesh;
     public TextMeshProUGUI livesTextMesh;
@@ -24,7 +25,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        spawner = FindObjectOfType<SpawnAsteroids>();
+        asteroidsSpawner = FindObjectOfType<SpawnAsteroids>();
+        ufoSpawner = FindObjectOfType<SpawnUfo>();
 
         cam = Camera.main;
         // gets position of camera top right point 
@@ -44,6 +46,8 @@ public class GameManager : MonoBehaviour
     {
         if (GetAsteroidsCount() <= 0 && GetUfoCount() <= 0)
         {
+            // add stopping all coroutines
+
             SpawnNewWave(currentWaveNum++);
         }
     }
@@ -51,7 +55,13 @@ public class GameManager : MonoBehaviour
     private void SpawnNewWave(int waveNum)
     {
         var bigAsteroidsAmount = Waves.waveDescription[waveNum][0];
-        spawner.SpawnBig(bigAsteroidsAmount);
+        asteroidsSpawner.SpawnBig(bigAsteroidsAmount);
+
+        var ufoAppearingTimeout = Waves.waveDescription[waveNum][1];
+        var ufoSpawningInterval = Waves.waveDescription[waveNum][2];
+        int[] ufoProbabilities = Waves.ufoProbabilities[waveNum];
+        StartCoroutine(
+            ufoSpawner.HandleSpawning(ufoAppearingTimeout, ufoSpawningInterval, ufoProbabilities));
     }
 
     private int GetUfoCount()
@@ -110,31 +120,33 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // int[0] is count of big asteroids
+    // waveDescription[N][0] is count of big asteroids
+    // waveDescription[N][1] is ufoAppearingTimeout
+    // waveDescription[N][2] is ufoSpawningInterval
     private static class Waves
     {
         public static List<int[]> waveDescription = new List<int[]>()
         {
-            new int[] {1},
-            new int[] {2},
-            new int[] {6},
-            new int[] {7},
-            new int[] {8},
-            new int[] {9}
+            new int[] {1, 5, 5},
+            new int[] {2, 30, 5},
+            new int[] {6, 30, 5},
+            new int[] {7, 30, 5},
+            new int[] {8, 30, 5},
+            new int[] {9, 30, 5}
         };
 
-        public static int[,] ufoProbabilities = new int[10, 10]
+        public static int[][] ufoProbabilities = new int[10][]
         {
-            {1,1,1,1,1,1,1,1,1,1},
-            {1,1,1,1,1,1,2,2,2,2},
-            {1,1,1,1,1,2,2,2,2,2},
-            {1,1,1,1,2,2,2,2,2,2},
-            {1,1,1,2,2,2,2,2,2,2},
-            {1,1,2,2,2,2,2,2,2,2},
-            {1,2,2,2,2,2,2,2,2,2},
-            {2,2,2,2,2,2,2,2,2,2},
-            {2,2,2,2,2,2,2,2,2,2},
-            {2,2,2,2,2,2,2,2,2,2},
+            new int[] {1,1,1,1,1,1,1,1,1,1},
+            new int[] {1,1,1,1,1,1,2,2,2,2},
+            new int[] {1,1,1,1,1,2,2,2,2,2},
+            new int[] {1,1,1,1,2,2,2,2,2,2},
+            new int[] {1,1,1,2,2,2,2,2,2,2},
+            new int[] {1,1,2,2,2,2,2,2,2,2},
+            new int[] {1,2,2,2,2,2,2,2,2,2},
+            new int[] {2,2,2,2,2,2,2,2,2,2},
+            new int[] {2,2,2,2,2,2,2,2,2,2},
+            new int[] {2,2,2,2,2,2,2,2,2,2},
         };
     }
 }

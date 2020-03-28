@@ -5,7 +5,6 @@ public class SpawnUfo : MonoBehaviour
 {
     public GameObject bigUfo;
     public GameObject smallUfo;
-    public float bigUfoSpawningTimeout;
 
     GameManager gameManager;
 
@@ -13,32 +12,24 @@ public class SpawnUfo : MonoBehaviour
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
-        StartCoroutine(SpawnBig());        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    IEnumerator SpawnBig()
-    {
-        yield return new WaitForSeconds(bigUfoSpawningTimeout);
-        Instantiate(bigUfo, GetRandomUfoPosition(), bigUfo.transform.rotation);
     }
 
     Vector2 GetRandomUfoPosition()
     {
-        // for random picking left or right screen side        
+        // random picking left or right screen side        
         var xModifiers = new int[] { -1, 1 };
         var xMod = xModifiers[Random.Range(0, xModifiers.Length)];
 
         // generate position with x as left or right border and random y position
         var position = new Vector2(
-            gameManager.horizontalBound * xMod, 
-            Random.Range(0f, gameManager.verticalBound));
+            gameManager.horizontalBound * xMod,
+            Random.Range(-gameManager.verticalBound, gameManager.verticalBound));
 
         return position;
+    }
+
+    internal IEnumerator HandleSpawning(int ufoAppearingTimeout, int ufoSpawningInterval, int[] ufoProbabilities)
+    {
+        throw new System.NotImplementedException();
     }
 }
