@@ -9,8 +9,7 @@ TagManager:
   - Asteroid_small
   - Asteroid
   - PlayerProjectile
-  - Ufo_big
-  - Ufo_small
+  - Ufo
   layers:
   - Default
   - TransparentFX

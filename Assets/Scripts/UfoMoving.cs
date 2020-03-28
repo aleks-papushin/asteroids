@@ -40,7 +40,7 @@ public class UfoMoving : MonoBehaviour
     }
 
     // accidentally move by 45 degree for a a couple of seconds, than move horizontally again
-    private IEnumerator WaitTimeout()
+    private IEnumerator WaitThenChangeDirection()
     {
         yield return new WaitForSeconds(changingDirectionTimeout);        
         pickNewDirection = true;
@@ -48,14 +48,14 @@ public class UfoMoving : MonoBehaviour
 
     private void CalculateMovement()
     {
-        GetYDirection();
+        ChangeYDirection();
         movement = new Vector2(xMovement, (float)yMovement);
         movement.Normalize();
         pickNewDirection = false;
-        StartCoroutine(WaitTimeout());
+        StartCoroutine(WaitThenChangeDirection());
     }
 
-    private void GetYDirection()
+    private void ChangeYDirection()
     {
         // if null pick any value        
         if (yMovement == null)
