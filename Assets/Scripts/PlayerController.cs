@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -7,16 +8,23 @@ public class PlayerController : MonoBehaviour
 
     GameManager gameManager;
     Rigidbody2D rig;
+    SpriteRenderer sprite;
 
-    float rotationSpeed = 200.0f;
-    float engineForce = 2f;
-    float timeoutBeforeTeleporting = 0.6f;
+    const float rotationSpeed = 200.0f;
+    const float engineForce = 2f;
+    const float timeoutBeforeTeleporting = 0.6f;    
     bool canTeleport = true;
+
+    const float invincibilityTimeout = 3;
+    float blinkingTimer = 0;
+    const float blinkingInterval = 0.15f;
+    bool isInvincible = false;
 
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
         rig = GetComponent<Rigidbody2D>();
+        sprite = GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -24,6 +32,20 @@ public class PlayerController : MonoBehaviour
         HandleMoving();
         HandleShooting();
         HandleTeleport();
+        HandleBlinking();
+    }
+
+    private void HandleBlinking()
+    {
+        if (isInvincible)
+        {
+            blinkingTimer += Time.deltaTime;
+            if (blinkingTimer > blinkingInterval)
+            {
+                sprite.enabled = !sprite.enabled;
+                blinkingTimer = 0;
+            }
+        }
     }
 
     private void HandleMoving()
@@ -38,36 +60,66 @@ public class PlayerController : MonoBehaviour
 
     private void HandleTeleport()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            if (canTeleport)
-            {                
-                StartCoroutine(Teleport());
-            }
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canTeleport)
+        {              
+            StartCoroutine(Teleport());
         }
     }
 
-    private IEnumerator Teleport()
+    public IEnumerator Teleport(bool lifeWasLost = false)
     {
         canTeleport = false;
 
         // disappear player
         GetComponent<Collider2D>().enabled = false;
-        GetComponent<SpriteRenderer>().enabled = false;
+        sprite.enabled = false;
 
         // wait for timeout
         yield return new WaitForSeconds(timeoutBeforeTeleporting);
 
-        // appear at new pos, stop movement        
-        var newPos = gameManager.GetRandomPosition();
-        transform.position = newPos;
+        // appear at new pos
+        if (lifeWasLost) 
+        {
+            isInvincible = true;
+            transform.position = Vector2.zero;
+            transform.rotation = Quaternion.identity;
+        }
+        else // if just teleporting
+        {
+            var newPos = gameManager.GetRandomPosition();
+            transform.position = newPos;
+        }
+
+        // stop movement
         rig.velocity = Vector2.zero;
         rig.angularVelocity = 0f;
 
-        // show player
-        GetComponent<SpriteRenderer>().enabled = true;
-        GetComponent<Collider2D>().enabled = true;        
+        // show player, handle invincibility (be invincible if life was lost)
+        if (isInvincible)
+        {
+            Debug.Log($"Inside if (isInvincible) before StartCoroutine(BeInvincible()). isInvincible: {isInvincible}");            
+            StartCoroutine(BeInvincible());
+        }
+        else
+        {
+            sprite.enabled = true;
+            GetComponent<Collider2D>().enabled = true;
 
+            canTeleport = true;
+        }
+    }
+
+    private IEnumerator BeInvincible()
+    {
+        Debug.Log($"Inside BeInvincible. isInvincible: {isInvincible}");
+
+        yield return new WaitForSeconds(invincibilityTimeout);
+
+        isInvincible = false;
+
+        sprite.enabled = true;
+        GetComponent<Collider2D>().enabled = true;
+                
         canTeleport = true;
     }
 

@@ -58,6 +58,9 @@ public class GameManager : MonoBehaviour
     {
         this.AddLives(-1);
 
+        // teleport player to center, orient up
+        StartCoroutine(player.GetComponent<PlayerController>().Teleport(lifeWasLost: true));
+
         if (Lives == 0)
         {
             Destroy(player.gameObject);
