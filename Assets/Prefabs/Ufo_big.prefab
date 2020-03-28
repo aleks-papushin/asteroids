@@ -12,11 +12,12 @@ GameObject:
   - component: {fileID: 1814880824085970990}
   - component: {fileID: 2960925774154009868}
   - component: {fileID: -1255303134742715546}
-  - component: {fileID: 3255760361539500113}
   - component: {fileID: 4941992388143499830}
+  - component: {fileID: 3255760361539500113}
+  - component: {fileID: -3851086600937964668}
   m_Layer: 0
   m_Name: Ufo_big
-  m_TagString: Untagged
+  m_TagString: Ufo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -138,6 +139,18 @@ MonoBehaviour:
     type: 3}
   speed: 9
   timeoutSeconds: 1
+--- !u!114 &4941992388143499830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3971331808000090301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fea7e9522f381a24280a49736c2b22be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3255760361539500113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,7 +165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   changingDirectionTimeout: 2
---- !u!114 &4941992388143499830
+--- !u!114 &-3851086600937964668
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -161,6 +174,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 3971331808000090301}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fea7e9522f381a24280a49736c2b22be, type: 3}
+  m_Script: {fileID: 11500000, guid: c3ae3126d626f034b8bac00a2611a89c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

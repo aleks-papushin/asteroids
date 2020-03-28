@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 2049226467376725991}
   - component: {fileID: 4157434037643177621}
   - component: {fileID: 1417318025307858408}
+  - component: {fileID: -1760460406516246499}
   m_Layer: 0
   m_Name: Ufo_small
-  m_TagString: Untagged
+  m_TagString: Ufo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -167,3 +168,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   changingDirectionTimeout: 2
+--- !u!114 &-1760460406516246499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3971331808000090301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3ae3126d626f034b8bac00a2611a89c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

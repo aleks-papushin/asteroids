@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
 
-public class PlayerCollisions : MonoBehaviour
+public class UfoCollisions : MonoBehaviour
 {
-    GameManager game;
     SpawnAsteroids spawner;
 
+    // Start is called before the first frame update
     void Start()
     {
-        game = FindObjectOfType<GameManager>();
         spawner = FindObjectOfType<SpawnAsteroids>();
     }
 
@@ -15,7 +14,6 @@ public class PlayerCollisions : MonoBehaviour
     {
         var otherTag = other.gameObject.tag;
 
-        // extract to separate function
         if (otherTag.Contains("Asteroid"))
         {
             if (other.CompareTag("Asteroid_big"))
@@ -28,12 +26,7 @@ public class PlayerCollisions : MonoBehaviour
             }
 
             Destroy(other.gameObject);
-            game.HandlePlayerDamage(GetComponent<Collider2D>());
-        }
-        else if (other.CompareTag("Ufo"))
-        {
-            Destroy(other.gameObject);
-            game.HandlePlayerDamage(GetComponent<Collider2D>());
+            Destroy(gameObject);
         }
     }
 }
