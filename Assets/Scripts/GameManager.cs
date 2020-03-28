@@ -54,6 +54,16 @@ public class GameManager : MonoBehaviour
             Random.Range(-verticalBound, verticalBound));
     }
 
+    public void HandlePlayerDamage(Collider2D player)
+    {
+        this.AddLives(-1);
+
+        if (Lives == 0)
+        {
+            Destroy(player.gameObject);
+        }
+    }
+
     private void HandleBonusLife()
     {        
         if (score - addLiveOn >= 0)

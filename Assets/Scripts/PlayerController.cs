@@ -41,8 +41,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             if (canTeleport)
-            {
-                canTeleport = false;
+            {                
                 StartCoroutine(Teleport());
             }
         }
@@ -50,6 +49,8 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator Teleport()
     {
+        canTeleport = false;
+
         // disappear player
         GetComponent<Collider2D>().enabled = false;
         GetComponent<SpriteRenderer>().enabled = false;
@@ -57,7 +58,7 @@ public class PlayerController : MonoBehaviour
         // wait for timeout
         yield return new WaitForSeconds(timeoutBeforeTeleporting);
 
-        // appear at new pos        
+        // appear at new pos, stop movement        
         var newPos = gameManager.GetRandomPosition();
         transform.position = newPos;
         rig.velocity = Vector2.zero;
