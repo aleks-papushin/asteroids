@@ -32,15 +32,21 @@ public class SpawnAsteroids : MonoBehaviour
 
     private void Spawn(GameObject asteroid, int count, Vector2? position = null)
     {
-        
+        bool isGeneratePosition = false;
+
         if (position == null)
         {
-            position = gameManager.GetRandomPosition();
+            isGeneratePosition = true;
         }
 
         for (int i = 0; i < count; i++)
         {
-            Instantiate(asteroid, (Vector2) position, asteroidBig.transform.rotation);
+            if (isGeneratePosition)
+            {
+                position = gameManager.GetRandomPosition();
+            }
+
+            Instantiate(asteroid, (Vector2)position, asteroidBig.transform.rotation);
         }
     }
 }
