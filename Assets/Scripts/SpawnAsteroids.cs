@@ -2,8 +2,6 @@
 
 public class SpawnAsteroids : MonoBehaviour
 {
-    public int count;
-
     public GameObject asteroidBig;
     public GameObject asteroidMiddle;
     public GameObject asteroidSmall;
