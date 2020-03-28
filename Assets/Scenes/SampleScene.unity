@@ -490,7 +490,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95a635d773416164e9c807661ed608eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bigUfo: {fileID: 3971331808000090301, guid: 6201d431d40ed1b47b5a9a2f184b8b02, type: 3}
+  bigUfo: {fileID: 3971331808000090301, guid: 95ee66f50d8eb0a459eaca86296b7319, type: 3}
+  smallUfo: {fileID: 3971331808000090301, guid: 6201d431d40ed1b47b5a9a2f184b8b02,
+    type: 3}
   bigUfoSpawningTimeout: 1
 --- !u!1 &1512279361
 GameObject:

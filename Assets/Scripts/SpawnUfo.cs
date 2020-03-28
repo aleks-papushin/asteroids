@@ -4,6 +4,7 @@ using UnityEngine;
 public class SpawnUfo : MonoBehaviour
 {
     public GameObject bigUfo;
+    public GameObject smallUfo;
     public float bigUfoSpawningTimeout;
 
     GameManager gameManager;
