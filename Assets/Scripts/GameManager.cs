@@ -1,8 +1,11 @@
-﻿using TMPro;
+﻿using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    SpawnAsteroids spawner;
+
     public TextMeshProUGUI scoreTextMesh;
     public TextMeshProUGUI livesTextMesh;
 
@@ -16,9 +19,13 @@ public class GameManager : MonoBehaviour
     private int score;    
     private int addLifeOn = 10000;
 
+    public int currentWaveNum;
+
     // Start is called before the first frame update
     void Start()
     {
+        spawner = FindObjectOfType<SpawnAsteroids>();
+
         cam = Camera.main;
         // gets position of camera top right point 
         screenBorders = cam.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
@@ -26,6 +33,40 @@ public class GameManager : MonoBehaviour
         verticalBound = screenBorders.y;
 
         AddLives(initLifesCount);
+    }
+
+    private void Update()
+    {
+        HandleWaves();
+    }
+
+    private void HandleWaves()
+    {
+        if (GetAsteroidsCount() <= 0 && GetUfoCount() <= 0)
+        {
+            SpawnNewWave(currentWaveNum++);
+        }
+    }
+
+    private void SpawnNewWave(int waveNum)
+    {
+        var bigAsteroidsAmount = Waves.waveDescription[waveNum][0];
+        spawner.SpawnBig(bigAsteroidsAmount);
+    }
+
+    private int GetUfoCount()
+    {
+        return GameObject.FindGameObjectsWithTag("Ufo").Length;
+    }
+
+    private int GetAsteroidsCount()
+    {
+        int asteroidsCount = 0;
+        asteroidsCount += GameObject.FindGameObjectsWithTag("Asteroid_big").Length;
+        asteroidsCount += GameObject.FindGameObjectsWithTag("Asteroid_middle").Length;
+        asteroidsCount += GameObject.FindGameObjectsWithTag("Asteroid_small").Length;
+
+        return asteroidsCount;
     }
 
     public void AddLives(int addLives)
@@ -67,5 +108,19 @@ public class GameManager : MonoBehaviour
             AddLives(1);
             addLifeOn += 10000;
         }
+    }
+
+    // int[0] is count of big asteroids
+    private static class Waves
+    {
+        public static List<int[]> waveDescription = new List<int[]>()
+        {
+            new int[] {1},
+            new int[] {2},
+            new int[] {6},
+            new int[] {7},
+            new int[] {8},
+            new int[] {9}
+        };
     }
 }

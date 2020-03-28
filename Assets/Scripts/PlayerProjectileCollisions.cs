@@ -20,7 +20,7 @@ public class PlayerProjectileCollisions : MonoBehaviour
         {
             if (other.CompareTag("Asteroid_big"))
             {
-                spawner.SpawnMedium(2, other.transform.position);
+                spawner.SpawnMiddle(2, other.transform.position);
             }
             else if (other.CompareTag("Asteroid_middle"))
             {

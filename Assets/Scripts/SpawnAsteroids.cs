@@ -10,15 +10,17 @@ public class SpawnAsteroids : MonoBehaviour
 
     GameManager gameManager;
 
-    // Start is called before the first frame update
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
-
-        Spawn(asteroidBig, count);
     }
 
-    public void SpawnMedium(int count, Vector2 position)
+    public void SpawnBig(int count, Vector2? position = null)
+    {
+        Spawn(asteroidBig, count, position);
+    }
+
+    public void SpawnMiddle(int count, Vector2 position)
     {
         Spawn(asteroidMiddle, count, position);
     }
@@ -30,20 +32,14 @@ public class SpawnAsteroids : MonoBehaviour
 
     private void Spawn(GameObject asteroid, int count, Vector2? position = null)
     {
-        bool isGeneratePosition = false;
-
+        
         if (position == null)
         {
-            isGeneratePosition = true;
+            position = gameManager.GetRandomPosition();
         }
 
         for (int i = 0; i < count; i++)
         {
-            if (isGeneratePosition)
-            {
-                position = gameManager.GetRandomPosition();
-            }
-
             Instantiate(asteroid, (Vector2) position, asteroidBig.transform.rotation);
         }
     }
