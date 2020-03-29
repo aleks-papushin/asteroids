@@ -35,12 +35,12 @@ public class SpawnUfo : MonoBehaviour
 
         while (IsWaveNumConsistent(currentWaveNum))
         {
+            yield return new WaitForSeconds(ufoSpawningInterval);
+
             while (IsUfoExisting)
             {
                 yield return new WaitForSeconds(ufoPollingInterval);
             }
-
-            yield return new WaitForSeconds(ufoSpawningInterval);
 
             if (IsWaveNumConsistent(currentWaveNum))
             {

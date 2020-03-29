@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -15,19 +17,21 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI scoreTextMesh;
     public TextMeshProUGUI livesTextMesh;
 
+    public TextMeshProUGUI scoreOnGameOver;
+
     Camera cam;
     public float horizontalBound;
     public float verticalBound;
     Vector2 screenBorders;
 
     public int Lives { get; private set; }
-    private const int initLifesCount = 3;
+    private const int initLifesCount = 1;
     private int score;    
     private int addLifeOn = 10000;
 
     private bool isGameActive = false;
 
-    public int CurrentWaveNum { get; private set; }
+    public int CurrentWaveNum { get; private set; } = 0;
 
     public void StartGame()
     {
@@ -52,9 +56,69 @@ public class GameManager : MonoBehaviour
         StartCoroutine(HandleWaves());
     }
 
+    public void RestartGame()
+    {
+        // destroy all asteroids and ufos
+        DestroyAsteroids();
+        DestroyUfos();
+
+        // reset score and wave number
+        CurrentWaveNum = 0;
+        score = 0;
+
+        // enable text meshes objects
+        scoreTextMesh.gameObject.SetActive(true);
+        livesTextMesh.gameObject.SetActive(true);
+
+        // start game
+        StartGame();
+    }
+
     public void GameOver()
     {
+        scoreTextMesh.gameObject.SetActive(false);
+        livesTextMesh.gameObject.SetActive(false);
         gameOverScreen.SetActive(true);
+
+        scoreOnGameOver.text = $"Your score: {score}";
+
+        CurrentWaveNum = -1; // for stopping ufo spawning coroutine
+    }
+
+    public void AddLives(int addLives)
+    {
+        this.Lives += addLives;
+        livesTextMesh.text = $"Lives: {this.Lives}";
+    }
+
+    public void UpdateScore(int addScore)
+    {
+        score += addScore;
+        this.HandleBonusLife();
+        scoreTextMesh.text = $"Score: {score}";
+    }
+
+    public Vector2 GetRandomPosition()
+    {
+        return new Vector2(
+            UnityEngine.Random.Range(-horizontalBound, horizontalBound),
+            UnityEngine.Random.Range(-verticalBound, verticalBound));
+    }
+
+    public void HandlePlayerDamage(Collider2D player)
+    {
+        this.AddLives(-1);
+
+        if (Lives > 0)
+        {
+            StartCoroutine(player.GetComponent<PlayerController>().Teleport(isLifeLost: true));
+        }
+        else
+        {
+            isGameActive = false;
+            Destroy(player.gameObject);
+            this.GameOver();
+        }
     }
 
     private IEnumerator HandleWaves()
@@ -101,38 +165,27 @@ public class GameManager : MonoBehaviour
         return asteroidsCount;
     }
 
-    public void AddLives(int addLives)
+    private void DestroyUfos()
     {
-        this.Lives += addLives;
-        livesTextMesh.text = $"Lives: {this.Lives}";
-    }
+        var ufos = GameObject.FindGameObjectsWithTag("Ufo_big").ToList();
+        ufos.AddRange(GameObject.FindGameObjectsWithTag("Ufo_small"));
 
-    public void UpdateScore(int addScore)
-    {
-        score += addScore;
-        this.HandleBonusLife();
-        scoreTextMesh.text = $"Score: {score}";
-    }
-
-    public Vector2 GetRandomPosition()
-    {
-        return new Vector2(
-            Random.Range(-horizontalBound, horizontalBound),
-            Random.Range(-verticalBound, verticalBound));
-    }
-
-    public void HandlePlayerDamage(Collider2D player)
-    {
-        this.AddLives(-1);
-
-        if (Lives <= 0)
+        foreach (var ufo in ufos)
         {
-            isGameActive = false;
-            Destroy(player.gameObject);
-            this.GameOver();
+            Destroy(ufo);
         }
+    }
 
-        StartCoroutine(player.GetComponent<PlayerController>().Teleport(isLifeLost: true));
+    private void DestroyAsteroids()
+    {
+        var asteroids = GameObject.FindGameObjectsWithTag("Asteroid_big").ToList();
+        asteroids.AddRange(GameObject.FindGameObjectsWithTag("Asteroid_middle"));
+        asteroids.AddRange(GameObject.FindGameObjectsWithTag("Asteroid_small"));
+
+        foreach (var asteroid in asteroids)
+        {
+            Destroy(asteroid);
+        }
     }
 
     private void HandleBonusLife()
