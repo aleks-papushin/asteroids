@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class SpawnUfo : MonoBehaviour
@@ -28,9 +29,11 @@ public class SpawnUfo : MonoBehaviour
 
     internal IEnumerator HandleSpawning(int ufoAppearingTimeout, int ufoSpawningInterval, int[] ufoProbabilities)
     {
+        var currentWaveNum = gameManager.CurrentWaveNum;
+
         yield return new WaitForSeconds(ufoAppearingTimeout - ufoSpawningInterval);
 
-        while (true)
+        while (IsWaveNumConsistent(currentWaveNum))
         {
             while (IsUfoExisting)
             {
@@ -39,16 +42,22 @@ public class SpawnUfo : MonoBehaviour
 
             yield return new WaitForSeconds(ufoSpawningInterval);
 
-            ChooseAndSpawnUfo(ufoProbabilities);
+            if (IsWaveNumConsistent(currentWaveNum))
+            {
+                ChooseAndSpawnUfo(ufoProbabilities);
+            }
         }
+    }
 
-        // !!! stop this coroutine if wave is ended
+    private bool IsWaveNumConsistent(int currentWaveNum)
+    {
+        return currentWaveNum == gameManager.CurrentWaveNum;
     }
 
     private void ChooseAndSpawnUfo(int[] ufoProbabilities)
     {
         // get random from probabilities array
-        var picker = ufoProbabilities[Random.Range(0, ufoProbabilities.Length)];
+        var picker = ufoProbabilities[UnityEngine.Random.Range(0, ufoProbabilities.Length)];
         GameObject ufo = null;
 
         switch (picker)
@@ -68,12 +77,12 @@ public class SpawnUfo : MonoBehaviour
     {
         // random picking left or right screen side        
         var xModifiers = new int[] { -1, 1 };
-        var xMod = xModifiers[Random.Range(0, xModifiers.Length)];
+        var xMod = xModifiers[UnityEngine.Random.Range(0, xModifiers.Length)];
 
         // generate position with x as left or right border and random y position
         var position = new Vector2(
             gameManager.horizontalBound * xMod,
-            Random.Range(-gameManager.verticalBound, gameManager.verticalBound));
+            UnityEngine.Random.Range(-gameManager.verticalBound, gameManager.verticalBound));
 
         return position;
     }

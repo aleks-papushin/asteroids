@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     private int score;    
     private int addLifeOn = 10000;
 
-    public int currentWaveNum;
+    public int CurrentWaveNum { get; private set; }
 
     // Start is called before the first frame update
     void Start()
@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
         {
             // add stopping all coroutines
 
-            SpawnNewWave(currentWaveNum++);
+            SpawnNewWave(CurrentWaveNum++);
         }
     }
 
@@ -129,8 +129,8 @@ public class GameManager : MonoBehaviour
     {
         public static List<int[]> waveDescription = new List<int[]>()
         {
-            new int[] {1, 5, 5},
-            new int[] {2, 30, 5},
+            new int[] {1, 1, 1},
+            new int[] {2, 3000, 5},
             new int[] {6, 30, 5},
             new int[] {7, 30, 5},
             new int[] {8, 30, 5},
