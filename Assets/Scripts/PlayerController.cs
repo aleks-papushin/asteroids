@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer fireSprite;
 
     const float rotationSpeed = 300.0f;
-    const float engineForce = 4f;
+    const float engineForce = 2f;
     const float timeoutBeforeTeleporting = 0.6f;    
     bool canTeleport = true;
     bool isTeleportingNow = false;
