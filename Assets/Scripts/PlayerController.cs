@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     const float engineForce = 2f;
     const float timeoutBeforeTeleporting = 0.6f;    
     bool canTeleport = true;
+    bool isTeleportingNow = false;
 
     const float invincibilityTimeout = 3;
     float shipBlinkingTimer = 0;
@@ -44,6 +45,7 @@ public class PlayerController : MonoBehaviour
 
     public IEnumerator Teleport(bool isLifeLost = false)
     {
+        isTeleportingNow = true;
         canTeleport = false;
 
         // disappear player
@@ -82,11 +84,13 @@ public class PlayerController : MonoBehaviour
 
             canTeleport = true;
         }
+
+        isTeleportingNow = false;
     }
 
     private void HandleMoving()
     {
-        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
+        if ((Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W)) && !isTeleportingNow)
         {
             rig.AddForce(transform.up * engineForce);
             isShowEngineFire = true;            
@@ -103,7 +107,7 @@ public class PlayerController : MonoBehaviour
     private void HandleTeleport()
     {
         if (GetTeleportKeysDown() && canTeleport)
-        {              
+        {            
             StartCoroutine(Teleport());
         }
     }
@@ -159,7 +163,7 @@ public class PlayerController : MonoBehaviour
     {
         while (true)
         {
-            while (isShowEngineFire)
+            while (isShowEngineFire && !isTeleportingNow)
             {
                 Debug.Log($"Inside while loop of HandleEngineFire. isShowEngineFire: {isShowEngineFire}");
 
@@ -172,6 +176,8 @@ public class PlayerController : MonoBehaviour
 
                 yield return null;
             }
+
+            fireSprite.enabled = false;
             yield return null;
         }
     }
