@@ -8,13 +8,46 @@ public class SpawnUfo : MonoBehaviour
 
     GameManager gameManager;
 
+    float ufoPollingInterval = 3;
+
     // Start is called before the first frame update
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
     }
 
-    Vector2 GetRandomUfoPosition()
+    internal IEnumerator HandleSpawning(int ufoAppearingTimeout, int ufoSpawningInterval, int[] ufoProbabilities)
+    {
+        yield return new WaitForSeconds(ufoAppearingTimeout - ufoSpawningInterval);
+
+        while (true)
+        {
+            yield return new WaitForSeconds(ufoSpawningInterval);
+
+            ChooseAndSpawnUfo(ufoProbabilities);
+        }
+    }
+
+    private void ChooseAndSpawnUfo(int[] ufoProbabilities)
+    {
+        // get random from probabilities array
+        var picker = ufoProbabilities[Random.Range(0, ufoProbabilities.Length)];
+        GameObject ufo = null;
+
+        switch (picker)
+        {
+            case 1:
+                ufo = bigUfo;
+                break;
+            case 2:
+                ufo = smallUfo;
+                break;
+        }
+
+        Instantiate(ufo, GetRandomUfoPosition(), ufo.transform.rotation);
+    }
+
+    private Vector2 GetRandomUfoPosition()
     {
         // random picking left or right screen side        
         var xModifiers = new int[] { -1, 1 };
@@ -26,10 +59,5 @@ public class SpawnUfo : MonoBehaviour
             Random.Range(-gameManager.verticalBound, gameManager.verticalBound));
 
         return position;
-    }
-
-    internal IEnumerator HandleSpawning(int ufoAppearingTimeout, int ufoSpawningInterval, int[] ufoProbabilities)
-    {
-        throw new System.NotImplementedException();
     }
 }

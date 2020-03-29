@@ -54,9 +54,11 @@ public class GameManager : MonoBehaviour
 
     private void SpawnNewWave(int waveNum)
     {
+        // Spawn asteroids
         var bigAsteroidsAmount = Waves.waveDescription[waveNum][0];
         asteroidsSpawner.SpawnBig(bigAsteroidsAmount);
 
+        // Spawn ufo
         var ufoAppearingTimeout = Waves.waveDescription[waveNum][1];
         var ufoSpawningInterval = Waves.waveDescription[waveNum][2];
         int[] ufoProbabilities = Waves.ufoProbabilities[waveNum];
