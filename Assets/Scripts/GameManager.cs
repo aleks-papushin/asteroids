@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
         verticalBound = screenBorders.y;
 
         AddLives(initLifesCount);
+        UpdateScore(0);
     }
 
     private void Update()
@@ -135,7 +136,7 @@ public class GameManager : MonoBehaviour
     {
         public static List<int[]> waveDescription = new List<int[]>()
         {
-            new int[] {1, 1, 1},
+            new int[] {10, 1, 1},
             new int[] {1, 3, 3},
             new int[] {1, 3, 5},
             new int[] {1, 3, 5},
