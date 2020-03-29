@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     public int Lives { get; private set; }
     private const int initLifesCount = 3;
     private int score;
-    private const int bonusScoreIncrement = 5000;
+    private const int bonusScoreIncrement = 3000;
     private int addLifeOn = bonusScoreIncrement;
     
 
@@ -221,15 +221,15 @@ public class GameManager : MonoBehaviour
         public static int[][] ufoProbabilities = new int[10][]
         {
             new int[] {1,1,1,1,1,1,1,1,1,1},
+            new int[] {1,1,1,1,1,1,1,1,1,2},
+            new int[] {1,1,1,1,1,1,1,2,2,2},
             new int[] {1,1,1,1,1,1,2,2,2,2},
-            new int[] {1,1,1,1,1,2,2,2,2,2},
+            new int[] {1,1,1,1,2,2,2,2,2,2},
             new int[] {1,1,1,1,2,2,2,2,2,2},
             new int[] {1,1,1,2,2,2,2,2,2,2},
+            new int[] {1,1,1,2,2,2,2,2,2,2},
+            new int[] {1,1,1,2,2,2,2,2,2,2},
             new int[] {1,1,2,2,2,2,2,2,2,2},
-            new int[] {1,2,2,2,2,2,2,2,2,2},
-            new int[] {2,2,2,2,2,2,2,2,2,2},
-            new int[] {2,2,2,2,2,2,2,2,2,2},
-            new int[] {2,2,2,2,2,2,2,2,2,2},
         };
     }
 }

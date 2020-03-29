@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -8,11 +7,11 @@ public class PlayerController : MonoBehaviour
 
     GameManager gameManager;
     Rigidbody2D rig;
-    public SpriteRenderer shipSprite;
-    public SpriteRenderer fireSprite;
+    private SpriteRenderer shipSprite;
+    private SpriteRenderer fireSprite;
 
-    const float rotationSpeed = 200.0f;
-    const float engineForce = 2f;
+    const float rotationSpeed = 300.0f;
+    const float engineForce = 4f;
     const float timeoutBeforeTeleporting = 0.6f;    
     bool canTeleport = true;
     bool isTeleportingNow = false;
@@ -136,19 +135,19 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator ShipSpriteBlink()
     {
+        yield return null;
+
         while (isInvincible)
         {
+            yield return null;
+
             shipBlinkingTimer += Time.deltaTime;
             if (shipBlinkingTimer > shipBlinkingInterval)
             {
                 shipSprite.enabled = !shipSprite.enabled;
                 shipBlinkingTimer = 0;
             }
-
-            yield return null;
         }
-
-        yield return null;
     }
 
     private void HandleShooting()
@@ -163,20 +162,21 @@ public class PlayerController : MonoBehaviour
     {
         while (true)
         {
+            yield return null;
+
             while (isShowEngineFire && !isTeleportingNow)
             {
+                yield return null;
+
                 fireBlinkingTimer += Time.deltaTime;
                 if (fireBlinkingTimer > fireBlinkingInterval)
                 {
                     fireSprite.enabled = !fireSprite.enabled;
                     fireBlinkingTimer = 0;
                 }
-
-                yield return null;
             }
 
-            fireSprite.enabled = false;
-            yield return null;
+            fireSprite.enabled = false;            
         }
     }
 }

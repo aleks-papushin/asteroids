@@ -2,7 +2,7 @@
 
 public class MovingRandomly : MonoBehaviour
 {
-    public float speed;    
+    public float maxSpeed;    
     public float rotatingSpeed;
 
     Vector2 movement;
@@ -11,7 +11,7 @@ public class MovingRandomly : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        movement = new Vector2(Random.Range(-speed, speed), Random.Range(-speed, speed));
+        movement = new Vector2(Random.Range(-maxSpeed, maxSpeed), Random.Range(-maxSpeed, maxSpeed));
         rotation = Random.Range(-rotatingSpeed, rotatingSpeed);
     }
 
