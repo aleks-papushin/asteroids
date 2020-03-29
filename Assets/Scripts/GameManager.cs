@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     SpawnUfo ufoSpawner;
 
     public GameObject titleScreen;
+    public GameObject gameOverScreen;
     public TextMeshProUGUI scoreTextMesh;
     public TextMeshProUGUI livesTextMesh;
 
@@ -20,17 +21,19 @@ public class GameManager : MonoBehaviour
     Vector2 screenBorders;
 
     public int Lives { get; private set; }
-    private const int initLifesCount = 3000;
+    private const int initLifesCount = 3;
     private int score;    
     private int addLifeOn = 10000;
 
-    private bool isGameActive = true;
+    private bool isGameActive = false;
 
     public int CurrentWaveNum { get; private set; }
 
     public void StartGame()
     {
+        isGameActive = true;
         titleScreen.SetActive(false);
+        gameOverScreen.SetActive(false);
 
         Instantiate(player, Vector2.zero, Quaternion.identity);
 
@@ -43,10 +46,15 @@ public class GameManager : MonoBehaviour
         horizontalBound = screenBorders.x;
         verticalBound = screenBorders.y;
 
-        AddLives(initLifesCount);
-        UpdateScore(0);
+        this.AddLives(initLifesCount);
+        this.UpdateScore(0);
 
         StartCoroutine(HandleWaves());
+    }
+
+    public void GameOver()
+    {
+        gameOverScreen.SetActive(true);
     }
 
     private IEnumerator HandleWaves()
@@ -57,7 +65,7 @@ public class GameManager : MonoBehaviour
 
             if (GetAsteroidsCount() <= 0 && GetUfoCount() <= 0)
             {
-                SpawnNewWave(CurrentWaveNum++);
+                this.SpawnNewWave(CurrentWaveNum++);
             }
         }
     }
@@ -102,7 +110,7 @@ public class GameManager : MonoBehaviour
     public void UpdateScore(int addScore)
     {
         score += addScore;
-        HandleBonusLife();
+        this.HandleBonusLife();
         scoreTextMesh.text = $"Score: {score}";
     }
 
@@ -117,19 +125,21 @@ public class GameManager : MonoBehaviour
     {
         this.AddLives(-1);
 
-        StartCoroutine(player.GetComponent<PlayerController>().Teleport(isLifeLost: true));
-
-        if (Lives == 0)
+        if (Lives <= 0)
         {
+            isGameActive = false;
             Destroy(player.gameObject);
+            this.GameOver();
         }
+
+        StartCoroutine(player.GetComponent<PlayerController>().Teleport(isLifeLost: true));
     }
 
     private void HandleBonusLife()
     {        
         if (score >= addLifeOn)
         {
-            AddLives(1);
+            this.AddLives(1);
             addLifeOn += 10000;
         }
     }
