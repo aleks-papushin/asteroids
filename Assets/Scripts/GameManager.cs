@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject player;
+
     SpawnAsteroids asteroidsSpawner;
     SpawnUfo ufoSpawner;
 
@@ -25,6 +27,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Instantiate(player, Vector2.zero, Quaternion.identity);
+
         asteroidsSpawner = FindObjectOfType<SpawnAsteroids>();
         ufoSpawner = FindObjectOfType<SpawnUfo>();
 
@@ -132,9 +136,9 @@ public class GameManager : MonoBehaviour
         public static List<int[]> waveDescription = new List<int[]>()
         {
             new int[] {1, 1, 1},
-            new int[] {2, 3, 3},
-            new int[] {6, 30, 5},
-            new int[] {7, 30, 5},
+            new int[] {1, 3, 3},
+            new int[] {1, 3, 5},
+            new int[] {1, 3, 5},
             new int[] {8, 30, 5},
             new int[] {9, 30, 5}
         };
