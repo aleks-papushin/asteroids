@@ -46,10 +46,18 @@ public class PlayerController : MonoBehaviour
 
     private void HandleTeleport()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && canTeleport)
+        if (GetTeleportKeysDown() && canTeleport)
         {              
             StartCoroutine(Teleport());
         }
+    }
+
+    private bool GetTeleportKeysDown()
+    {
+        return
+            Input.GetKeyDown(KeyCode.LeftShift) ||
+            Input.GetKeyDown(KeyCode.S) ||
+            Input.GetKeyDown(KeyCode.DownArrow);
     }
 
     public IEnumerator Teleport(bool isLifeLost = false)
