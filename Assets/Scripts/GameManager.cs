@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     SpawnAsteroids asteroidsSpawner;
     SpawnUfo ufoSpawner;
 
+    public GameObject titleScreen;
     public TextMeshProUGUI scoreTextMesh;
     public TextMeshProUGUI livesTextMesh;
 
@@ -27,9 +28,10 @@ public class GameManager : MonoBehaviour
 
     public int CurrentWaveNum { get; private set; }
 
-    // Start is called before the first frame update
-    void Start()
+    public void StartGame()
     {
+        titleScreen.SetActive(false);
+
         Instantiate(player, Vector2.zero, Quaternion.identity);
 
         asteroidsSpawner = FindObjectOfType<SpawnAsteroids>();
@@ -45,11 +47,6 @@ public class GameManager : MonoBehaviour
         UpdateScore(0);
 
         StartCoroutine(HandleWaves());
-    }
-
-    private void Update()
-    {
-        
     }
 
     private IEnumerator HandleWaves()
@@ -149,6 +146,10 @@ public class GameManager : MonoBehaviour
             new int[] {1, 3, 5},
             new int[] {1, 3, 5},
             new int[] {8, 30, 5},
+            new int[] {9, 30, 5},
+            new int[] {9, 30, 5},
+            new int[] {9, 30, 5},
+            new int[] {9, 30, 5},
             new int[] {9, 30, 5}
         };
 
