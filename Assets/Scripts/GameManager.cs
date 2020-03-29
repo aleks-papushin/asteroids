@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -22,6 +23,8 @@ public class GameManager : MonoBehaviour
     private int score;    
     private int addLifeOn = 10000;
 
+    private bool isGameActive = true;
+
     public int CurrentWaveNum { get; private set; }
 
     // Start is called before the first frame update
@@ -40,20 +43,25 @@ public class GameManager : MonoBehaviour
 
         AddLives(initLifesCount);
         UpdateScore(0);
+
+        StartCoroutine(HandleWaves());
     }
 
     private void Update()
     {
-        HandleWaves();
+        
     }
 
-    private void HandleWaves()
+    private IEnumerator HandleWaves()
     {
-        if (GetAsteroidsCount() <= 0 && GetUfoCount() <= 0)
+        while (isGameActive)
         {
-            // add stopping all coroutines
+            yield return null;
 
-            SpawnNewWave(CurrentWaveNum++);
+            if (GetAsteroidsCount() <= 0 && GetUfoCount() <= 0)
+            {
+                SpawnNewWave(CurrentWaveNum++);
+            }
         }
     }
 

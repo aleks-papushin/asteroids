@@ -165,8 +165,6 @@ public class PlayerController : MonoBehaviour
         {
             while (isShowEngineFire && !isTeleportingNow)
             {
-                Debug.Log($"Inside while loop of HandleEngineFire. isShowEngineFire: {isShowEngineFire}");
-
                 fireBlinkingTimer += Time.deltaTime;
                 if (fireBlinkingTimer > fireBlinkingInterval)
                 {
