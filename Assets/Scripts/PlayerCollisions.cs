@@ -30,7 +30,7 @@ public class PlayerCollisions : MonoBehaviour
             Destroy(other.gameObject);
             game.HandlePlayerDamage(GetComponent<Collider2D>());
         }
-        else if (other.CompareTag("Ufo"))
+        else if (other.CompareTag("Ufo_big") || other.CompareTag("Ufo_small"))
         {
             Destroy(other.gameObject);
             game.HandlePlayerDamage(GetComponent<Collider2D>());
