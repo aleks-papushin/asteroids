@@ -45,6 +45,7 @@ public class SpawnUfo : MonoBehaviour
             if (IsWaveNumConsistent(currentWaveNum))
             {
                 ChooseAndSpawnUfo(ufoProbabilities);
+                Debug.Log($"Inside HandleSpawning after ChooseAndSpawnUfo call. currentWaveNum: {currentWaveNum}");
             }
         }
     }
