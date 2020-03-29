@@ -68,7 +68,9 @@ public class GameManager : MonoBehaviour
 
     private int GetUfoCount()
     {
-        return GameObject.FindGameObjectsWithTag("Ufo").Length;
+        return 
+            GameObject.FindGameObjectsWithTag("Ufo_big").Length +
+            GameObject.FindGameObjectsWithTag("Ufo_small").Length;
     }
 
     private int GetAsteroidsCount()
@@ -130,7 +132,7 @@ public class GameManager : MonoBehaviour
         public static List<int[]> waveDescription = new List<int[]>()
         {
             new int[] {1, 1, 1},
-            new int[] {2, 3000, 5},
+            new int[] {2, 3, 3},
             new int[] {6, 30, 5},
             new int[] {7, 30, 5},
             new int[] {8, 30, 5},
