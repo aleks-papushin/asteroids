@@ -8,7 +8,17 @@ public class SpawnUfo : MonoBehaviour
 
     GameManager gameManager;
 
-    float ufoPollingInterval = 3;
+    float ufoPollingInterval = 2;
+
+    public bool IsUfoExisting 
+    { 
+        get
+        {
+            return 
+                (GameObject.FindGameObjectsWithTag("Ufo_big").Length +
+                GameObject.FindGameObjectsWithTag("Ufo_small").Length) > 0;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -22,10 +32,17 @@ public class SpawnUfo : MonoBehaviour
 
         while (true)
         {
+            while (IsUfoExisting)
+            {
+                yield return new WaitForSeconds(ufoPollingInterval);
+            }
+
             yield return new WaitForSeconds(ufoSpawningInterval);
 
             ChooseAndSpawnUfo(ufoProbabilities);
         }
+
+        // !!! stop this coroutine if wave is ended
     }
 
     private void ChooseAndSpawnUfo(int[] ufoProbabilities)
