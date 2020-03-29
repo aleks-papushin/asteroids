@@ -25,9 +25,11 @@ public class GameManager : MonoBehaviour
     Vector2 screenBorders;
 
     public int Lives { get; private set; }
-    private const int initLifesCount = 1;
-    private int score;    
-    private int addLifeOn = 10000;
+    private const int initLifesCount = 3;
+    private int score;
+    private const int bonusScoreIncrement = 5000;
+    private int addLifeOn = bonusScoreIncrement;
+    
 
     private bool isGameActive = false;
 
@@ -193,7 +195,7 @@ public class GameManager : MonoBehaviour
         if (score >= addLifeOn)
         {
             this.AddLives(1);
-            addLifeOn += 10000;
+            addLifeOn += bonusScoreIncrement;
         }
     }
 
@@ -204,16 +206,16 @@ public class GameManager : MonoBehaviour
     {
         public static List<int[]> waveDescription = new List<int[]>()
         {
-            new int[] {10, 1, 1},
-            new int[] {1, 3, 3},
-            new int[] {1, 3, 5},
-            new int[] {1, 3, 5},
-            new int[] {8, 30, 5},
-            new int[] {9, 30, 5},
-            new int[] {9, 30, 5},
-            new int[] {9, 30, 5},
-            new int[] {9, 30, 5},
-            new int[] {9, 30, 5}
+            new int[] {1, 20, 15},
+            new int[] {2, 20, 10},
+            new int[] {3, 15, 10},
+            new int[] {4, 15, 10},
+            new int[] {5, 10, 10},
+            new int[] {6, 10, 5},
+            new int[] {7, 10, 5},
+            new int[] {7, 8, 4},
+            new int[] {7, 6, 3},
+            new int[] {7, 5, 2}
         };
 
         public static int[][] ufoProbabilities = new int[10][]
