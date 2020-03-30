@@ -13,7 +13,6 @@ public class UfoMoving : MonoBehaviour
     float xMovement;
     float? yMovement = null;
 
-    // Start is called before the first frame update
     void Start()
     {
         // choose direction opposite to side you've appeared    
@@ -23,7 +22,6 @@ public class UfoMoving : MonoBehaviour
         CalculateMovement();        
     }
 
-    // Update is called once per frame
     void Update()
     {
         Move();

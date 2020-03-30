@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -19,21 +18,21 @@ public class GameManager : MonoBehaviour
 
     public TextMeshProUGUI scoreOnGameOver;
 
-    Camera cam;
+    public int CurrentWaveNum { get; private set; } = 0;
+
+    
     public float horizontalBound;
     public float verticalBound;
     Vector2 screenBorders;
+    Camera cam;
 
-    public int Lives { get; private set; }
+    private int Lives { get; set; }
     private const int initLifesCount = 3;
     private int score;
     private const int bonusScoreIncrement = 3000;
-    private int addLifeOn = bonusScoreIncrement;
-    
+    private int addLifeOn = bonusScoreIncrement;    
 
     private bool isGameActive = false;
-
-    public int CurrentWaveNum { get; private set; } = 0;
 
     public void StartGame()
     {
@@ -47,7 +46,6 @@ public class GameManager : MonoBehaviour
         ufoSpawner = FindObjectOfType<SpawnUfo>();
 
         cam = Camera.main;
-        // gets position of camera top right point 
         screenBorders = cam.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
         horizontalBound = screenBorders.x;
         verticalBound = screenBorders.y;
@@ -200,8 +198,8 @@ public class GameManager : MonoBehaviour
     }
 
     // waveDescription[N][0] is count of big asteroids
-    // waveDescription[N][1] is ufoAppearingTimeout
-    // waveDescription[N][2] is ufoSpawningInterval
+    // waveDescription[N][1] is ufoAppearingTimeout, seconds
+    // waveDescription[N][2] is ufoSpawningInterval after previous ufo destroyed, seconds
     private static class Waves
     {
         public static List<int[]> waveDescription = new List<int[]>()
@@ -218,6 +216,9 @@ public class GameManager : MonoBehaviour
             new int[] {7, 5, 2}
         };
 
+        // 1 row per every wave
+        // Random member from row is taken every ufo appearing
+        // 1 is for big ufo, 2 is for small one
         public static int[][] ufoProbabilities = new int[10][]
         {
             new int[] {1,1,1,1,1,1,1,1,1,1},
