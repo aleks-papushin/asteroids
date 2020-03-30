@@ -4,11 +4,9 @@ public class UfoProjectileMoveToPlayer : MonoBehaviour
 {
     public float speed;
 
-    GameObject player;
-    
+    GameObject player;    
     Vector2 targetDirection;
 
-    // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -16,7 +14,6 @@ public class UfoProjectileMoveToPlayer : MonoBehaviour
         targetDirection.Normalize();
     }
 
-    // Update is called once per frame
     void Update()
     {
         transform.Translate(targetDirection * speed * Time.deltaTime);

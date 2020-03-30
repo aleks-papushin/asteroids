@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class HandleBorders : MonoBehaviour
+public class HandleBounds : MonoBehaviour
 {
     GameManager gameManager;
 

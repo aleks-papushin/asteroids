@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 public class SpawnUfo : MonoBehaviour
@@ -21,7 +20,6 @@ public class SpawnUfo : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
@@ -57,7 +55,7 @@ public class SpawnUfo : MonoBehaviour
     private void ChooseAndSpawnUfo(int[] ufoProbabilities)
     {
         // get random from probabilities array
-        var picker = ufoProbabilities[UnityEngine.Random.Range(0, ufoProbabilities.Length)];
+        var picker = ufoProbabilities[Random.Range(0, ufoProbabilities.Length)];
         GameObject ufo = null;
 
         switch (picker)
@@ -77,12 +75,12 @@ public class SpawnUfo : MonoBehaviour
     {
         // random picking left or right screen side        
         var xModifiers = new int[] { -1, 1 };
-        var xMod = xModifiers[UnityEngine.Random.Range(0, xModifiers.Length)];
+        var xMod = xModifiers[Random.Range(0, xModifiers.Length)];
 
         // generate position with x as left or right border and random y position
         var position = new Vector2(
             gameManager.horizontalBound * xMod,
-            UnityEngine.Random.Range(-gameManager.verticalBound, gameManager.verticalBound));
+            Random.Range(-gameManager.verticalBound, gameManager.verticalBound));
 
         return position;
     }
