@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -24,6 +25,7 @@ public class GameManager : MonoBehaviour
 
     public bool IsGameActive { get; private set; } = false;
     public int CurrentWaveNum { get; private set; } = 0;
+    private int timeoutBeforeNextWave = 2;
 
     
     public float horizontalBound;
@@ -134,14 +136,14 @@ public class GameManager : MonoBehaviour
         return newAudio;
     }
 
-    public void HandleObjectExplosion(Collider2D other)
+    public void HandleObjectExplosion(Collider2D other, bool isPlayer = false)
     {
         audioSource.PlayOneShot(explosion);
         Instantiate(
             explosionParticles, 
             other.transform.position, 
             other.transform.rotation);
-        Destroy(other.gameObject);
+        if (!isPlayer) Destroy(other.gameObject);
     }
 
     private IEnumerator HandleWaves()
@@ -152,6 +154,7 @@ public class GameManager : MonoBehaviour
 
             if (GetAsteroidsCount() <= 0 && GetUfoCount() <= 0)
             {
+                yield return new WaitForSeconds(timeoutBeforeNextWave);
                 this.SpawnNewWave(CurrentWaveNum++);
             }
         }

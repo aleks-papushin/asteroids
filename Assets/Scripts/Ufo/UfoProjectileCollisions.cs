@@ -29,7 +29,7 @@ public class UfoProjectileCollisions : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("Player"))
         {
-            gameManager.HandleObjectExplosion(other);
+            gameManager.HandleObjectExplosion(other, isPlayer: true);
             gameManager.HandlePlayerDamage(other);
         }
     }
