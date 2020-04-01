@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
 
     public TextMeshProUGUI scoreOnGameOver;
 
+    public bool IsGameActive { get; private set; } = false;
     public int CurrentWaveNum { get; private set; } = 0;
 
     
@@ -27,16 +28,14 @@ public class GameManager : MonoBehaviour
     Camera cam;
 
     private int Lives { get; set; }
-    private const int initLifesCount = 3;
+    private const int initLifesCount = 1;
     private int score;
     private const int bonusScoreIncrement = 3000;
     private int addLifeOn = bonusScoreIncrement;    
 
-    private bool isGameActive = false;
-
     public void StartGame()
     {
-        isGameActive = true;
+        IsGameActive = true;
         titleScreen.SetActive(false);
         gameOverScreen.SetActive(false);
 
@@ -115,7 +114,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            isGameActive = false;
+            IsGameActive = false;
             Destroy(player.gameObject);
             this.GameOver();
         }
@@ -131,7 +130,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator HandleWaves()
     {
-        while (isGameActive)
+        while (IsGameActive)
         {
             yield return null;
 
