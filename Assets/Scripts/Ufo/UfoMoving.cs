@@ -6,6 +6,8 @@ public class UfoMoving : MonoBehaviour
     public float speed;
     public float changingDirectionTimeout;
 
+    GameManager gameManager;
+
     bool pickNewDirection = true;
     int xDirection;
     float[] yAngles = new float[] { -0.5f, 0.5f, 0 };
@@ -13,12 +15,21 @@ public class UfoMoving : MonoBehaviour
     float xMovement;
     float? yMovement = null;
 
+    public AudioClip engine;
+    AudioSource engineAudio;
+
     void Start()
     {
+        gameManager = FindObjectOfType<GameManager>();
+
         // choose direction opposite to side you've appeared    
         xDirection = transform.position.x < 0 ? 1 : -1;
         xMovement = 0.5f * xDirection;
-        
+
+        engineAudio = gameManager.AddAudio(gameObject, 0.2f);
+        engineAudio.clip = engine;
+        engineAudio.Play();
+
         CalculateMovement();        
     }
 

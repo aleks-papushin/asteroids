@@ -121,6 +121,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public AudioSource AddAudio(GameObject gObject, float volume = 1f)
+    {
+        var newAudio = gObject.AddComponent<AudioSource>();
+        newAudio.playOnAwake = false;
+        newAudio.volume = volume;
+        return newAudio;
+    }
+
     private IEnumerator HandleWaves()
     {
         while (isGameActive)
@@ -204,7 +212,7 @@ public class GameManager : MonoBehaviour
     {
         public static List<int[]> waveDescription = new List<int[]>()
         {
-            new int[] {1, 20, 15},
+            new int[] {1, 3, 3},
             new int[] {2, 20, 10},
             new int[] {3, 15, 10},
             new int[] {4, 15, 10},
@@ -221,7 +229,7 @@ public class GameManager : MonoBehaviour
         // 1 is for big ufo, 2 is for small one
         public static int[][] ufoProbabilities = new int[10][]
         {
-            new int[] {1,1,1,1,1,1,1,1,1,1},
+            new int[] {1,1,1,1,1,2,2,2,2,2},
             new int[] {1,1,1,1,1,1,1,1,1,2},
             new int[] {1,1,1,1,1,1,1,2,2,2},
             new int[] {1,1,1,1,1,1,2,2,2,2},

@@ -29,7 +29,6 @@ public class PlayerController : MonoBehaviour
     public AudioClip engine;
     AudioSource gunAudio;
     AudioSource engineAudio;
-    private bool engineSoundPlaying = false;
 
     void Start()
     {
@@ -38,10 +37,9 @@ public class PlayerController : MonoBehaviour
         shipSprite = GetComponent<SpriteRenderer>();
         fireSprite = transform.Find("Fire").GetComponent<SpriteRenderer>();
 
-        gunAudio = AddAudio(0.5f);
-        engineAudio = AddAudio(0.2f);
+        gunAudio = gameManager.AddAudio(gameObject, 0.5f);
+        engineAudio = gameManager.AddAudio(gameObject, 0.2f);
         engineAudio.clip = engine;
-
 
         StartCoroutine(HandleEngineFire());
     }
@@ -197,13 +195,5 @@ public class PlayerController : MonoBehaviour
 
             fireSprite.enabled = false;            
         }
-    }
-
-    private AudioSource AddAudio(float volume)
-    {
-        var newAudio = gameObject.AddComponent<AudioSource>();
-        newAudio.playOnAwake = false;
-        newAudio.volume = volume;
-        return newAudio;
     }
 }
