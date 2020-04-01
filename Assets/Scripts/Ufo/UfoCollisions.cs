@@ -2,10 +2,12 @@
 
 public class UfoCollisions : MonoBehaviour
 {
+    GameManager gameManager;
     SpawnAsteroids spawner;
 
     void Start()
     {
+        gameManager = FindObjectOfType<GameManager>();
         spawner = FindObjectOfType<SpawnAsteroids>();
     }
 
@@ -24,6 +26,7 @@ public class UfoCollisions : MonoBehaviour
                 spawner.SpawnSmall(2, other.transform.position);
             }
 
+            gameManager.PlayExplosion();
             Destroy(other.gameObject);
             Destroy(gameObject);
         }

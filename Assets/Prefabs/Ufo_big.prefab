@@ -162,6 +162,7 @@ MonoBehaviour:
     type: 3}
   speed: 9
   timeoutSeconds: 1
+  shot: {fileID: 8300000, guid: 971b487edbaf5ab40842bdc48144545c, type: 3}
 --- !u!114 &4941992388143499830
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,6 +190,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   changingDirectionTimeout: 2
+  engine: {fileID: 8300000, guid: 1737146c2a8276943b8070c6e0db18cc, type: 3}
 --- !u!114 &-3851086600937964668
 MonoBehaviour:
   m_ObjectHideFlags: 0

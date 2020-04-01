@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -11,7 +12,7 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer fireSprite;
 
     const float rotationSpeed = 300.0f;
-    const float engineForce = 2f;
+    const float engineForce = 8f;
     const float timeoutBeforeTeleporting = 0.6f;    
     bool canTeleport = true;
     bool isTeleportingNow = false;
@@ -25,6 +26,21 @@ public class PlayerController : MonoBehaviour
     float fireBlinkingInterval = 0.04f;
     bool isShowEngineFire = false;
 
+    public AudioClip shot;
+    public AudioClip engine;
+    AudioSource gunAudio;
+    AudioSource engineAudio;
+
+    public bool IsMovementAllowed
+    {
+        get
+        {
+            return 
+                (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W)) && 
+                !isTeleportingNow;
+        }
+    }
+
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
@@ -32,12 +48,21 @@ public class PlayerController : MonoBehaviour
         shipSprite = GetComponent<SpriteRenderer>();
         fireSprite = transform.Find("Fire").GetComponent<SpriteRenderer>();
 
+        gunAudio = gameManager.AddAudio(gameObject, 0.5f);
+        engineAudio = gameManager.AddAudio(gameObject, 0.2f);
+        engineAudio.clip = engine;
+
         StartCoroutine(HandleEngineFire());
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        HandleMoving();
+        HandleEngine();        
+    }
+
+    void Update()
+    {        
+        HandleMovementFeatures();
         HandleShooting();
         HandleTeleport();
     }
@@ -87,17 +112,32 @@ public class PlayerController : MonoBehaviour
         isTeleportingNow = false;
     }
 
-    private void HandleMoving()
+    private void HandleEngine()
     {
-        if ((Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W)) && !isTeleportingNow)
+        if (IsMovementAllowed)
         {
             rig.AddForce(transform.up * engineForce);
-            isShowEngineFire = true;            
+        }
+    }
+
+    // all about movement except adding force for forward moving
+    private void HandleMovementFeatures()
+    {
+        if (IsMovementAllowed)
+        {
+            isShowEngineFire = true;
+
+            if (!engineAudio.isPlaying)
+            {
+                engineAudio.Play();
+            }            
         }
         else if (Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.W))
         {
             isShowEngineFire = false;
             fireSprite.enabled = false;
+
+            engineAudio.Stop();            
         }
 
         transform.Rotate(0, 0, -Input.GetAxis("Horizontal") * rotationSpeed * Time.deltaTime);
@@ -155,6 +195,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Instantiate(projectile, transform.position, transform.rotation);
+            gunAudio.PlayOneShot(shot);
         }
     }
 

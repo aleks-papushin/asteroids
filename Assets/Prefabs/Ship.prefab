@@ -152,6 +152,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectile: {fileID: 1285623403344083278, guid: e6a87d3344153f64681261d7271e9794,
     type: 3}
+  shot: {fileID: 8300000, guid: 4e9e3e163a5a8114cbdbdda1b361f888, type: 3}
+  engine: {fileID: 8300000, guid: 82ccd56546e0dea4d9a474fc0f395de7, type: 3}
 --- !u!114 &1283341844976695415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,6 +179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25475ba86565d0641a5fdac5baf19771, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explosion: {fileID: 8300000, guid: 919bb0fd11920594cbcf585c2f0a959c, type: 3}
 --- !u!1 &8084559083076065450
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,6 +11,9 @@ public class GameManager : MonoBehaviour
     SpawnAsteroids asteroidsSpawner;
     SpawnUfo ufoSpawner;
 
+    public AudioClip explosion;
+    AudioSource audioSource;
+
     public GameObject titleScreen;
     public GameObject gameOverScreen;
     public TextMeshProUGUI scoreTextMesh;
@@ -18,6 +21,7 @@ public class GameManager : MonoBehaviour
 
     public TextMeshProUGUI scoreOnGameOver;
 
+    public bool IsGameActive { get; private set; } = false;
     public int CurrentWaveNum { get; private set; } = 0;
 
     
@@ -32,15 +36,15 @@ public class GameManager : MonoBehaviour
     private const int bonusScoreIncrement = 3000;
     private int addLifeOn = bonusScoreIncrement;    
 
-    private bool isGameActive = false;
-
     public void StartGame()
     {
-        isGameActive = true;
+        IsGameActive = true;
         titleScreen.SetActive(false);
         gameOverScreen.SetActive(false);
 
         Instantiate(player, Vector2.zero, Quaternion.identity);
+
+        audioSource = this.AddAudio(gameObject, 0.5f);
 
         asteroidsSpawner = FindObjectOfType<SpawnAsteroids>();
         ufoSpawner = FindObjectOfType<SpawnUfo>();
@@ -115,15 +119,28 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            isGameActive = false;
+            IsGameActive = false;
             Destroy(player.gameObject);
             this.GameOver();
         }
     }
 
+    public AudioSource AddAudio(GameObject gObject, float volume = 1f)
+    {
+        var newAudio = gObject.AddComponent<AudioSource>();
+        newAudio.playOnAwake = false;
+        newAudio.volume = volume;
+        return newAudio;
+    }
+
+    public void PlayExplosion()
+    {
+        audioSource.PlayOneShot(explosion);
+    }
+
     private IEnumerator HandleWaves()
     {
-        while (isGameActive)
+        while (IsGameActive)
         {
             yield return null;
 
