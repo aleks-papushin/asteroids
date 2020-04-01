@@ -7,6 +7,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public GameObject player;
+    public GameObject explosionParticles;
 
     SpawnAsteroids asteroidsSpawner;
     SpawnUfo ufoSpawner;
@@ -133,9 +134,14 @@ public class GameManager : MonoBehaviour
         return newAudio;
     }
 
-    public void PlayExplosion()
+    public void PlayExplosionSound()
     {
         audioSource.PlayOneShot(explosion);
+    }
+
+    public void InstantiateExplosionParticles(Vector2 position, Quaternion rotation)
+    {
+        Instantiate(explosionParticles, position, rotation);
     }
 
     private IEnumerator HandleWaves()

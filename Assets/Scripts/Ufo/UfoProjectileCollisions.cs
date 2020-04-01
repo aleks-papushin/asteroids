@@ -24,13 +24,14 @@ public class UfoProjectileCollisions : MonoBehaviour
                 spawner.SpawnSmall(2, other.transform.position);
             }
 
-            gameManager.PlayExplosion();
+
+            gameManager.PlayExplosionSound();
             Destroy(other.gameObject);
             Destroy(gameObject);
         }
         else if (other.gameObject.CompareTag("Player"))
         {
-            gameManager.PlayExplosion();
+            gameManager.PlayExplosionSound();
             gameManager.HandlePlayerDamage(other);
         }
     }

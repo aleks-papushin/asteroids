@@ -27,13 +27,13 @@ public class PlayerCollisions : MonoBehaviour
                 spawner.SpawnSmall(2, other.transform.position);
             }
 
-            gameManager.PlayExplosion();
+            gameManager.PlayExplosionSound();
             Destroy(other.gameObject);
             gameManager.HandlePlayerDamage(GetComponent<Collider2D>());
         }
         else if (other.CompareTag("Ufo_big") || other.CompareTag("Ufo_small"))
         {
-            gameManager.PlayExplosion();
+            gameManager.PlayExplosionSound();
             Destroy(other.gameObject);
             gameManager.HandlePlayerDamage(GetComponent<Collider2D>());
         }

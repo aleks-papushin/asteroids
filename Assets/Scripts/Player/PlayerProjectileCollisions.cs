@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class PlayerProjectileCollisions : MonoBehaviour
 {
@@ -27,18 +28,23 @@ public class PlayerProjectileCollisions : MonoBehaviour
                 spawner.SpawnSmall(2, other.transform.position);
             }
 
-            gameManager.PlayExplosion();
-            HandleScore(other);
-            Destroy(other.gameObject);
-            Destroy(gameObject);
+            HandleExplosion(other);
         }
         else if (otherTag.Contains("Ufo"))
         {
-            gameManager.PlayExplosion();
-            HandleScore(other);
-            Destroy(other.gameObject);
-            Destroy(gameObject);
+            HandleExplosion(other);
         }
+    }
+
+    private void HandleExplosion(Collider2D other)
+    {
+        gameManager.InstantiateExplosionParticles(
+            other.transform.position, 
+            other.transform.rotation);
+        gameManager.PlayExplosionSound();
+        HandleScore(other);
+        Destroy(other.gameObject);
+        Destroy(gameObject);
     }
 
     private void HandleScore(Collider2D other)

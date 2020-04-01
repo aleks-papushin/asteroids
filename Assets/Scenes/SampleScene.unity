@@ -151,6 +151,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1283341844976695418, guid: a158d50ee354d204fa3f98fb2cc3bb6f, type: 3}
+  explosionParticles: {fileID: 7559528810863321010, guid: 78f7ec8cd686faf4dbeb7e48e954a0fd,
+    type: 3}
+  explosion: {fileID: 8300000, guid: 919bb0fd11920594cbcf585c2f0a959c, type: 3}
   titleScreen: {fileID: 268835853}
   gameOverScreen: {fileID: 581826285}
   scoreTextMesh: {fileID: 1529837433}

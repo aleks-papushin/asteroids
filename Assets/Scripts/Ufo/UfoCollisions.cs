@@ -26,7 +26,7 @@ public class UfoCollisions : MonoBehaviour
                 spawner.SpawnSmall(2, other.transform.position);
             }
 
-            gameManager.PlayExplosion();
+            gameManager.PlayExplosionSound();
             Destroy(other.gameObject);
             Destroy(gameObject);
         }
