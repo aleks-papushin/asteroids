@@ -221,7 +221,7 @@ public class GameManager : MonoBehaviour
     {
         public static List<int[]> waveDescription = new List<int[]>()
         {
-            new int[] {1, 3, 3},
+            new int[] {1, 20, 15},
             new int[] {2, 20, 10},
             new int[] {3, 15, 10},
             new int[] {4, 15, 10},
