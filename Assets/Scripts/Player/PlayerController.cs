@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -11,7 +12,7 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer fireSprite;
 
     const float rotationSpeed = 300.0f;
-    const float engineForce = 2f;
+    const float engineForce = 8f;
     const float timeoutBeforeTeleporting = 0.6f;    
     bool canTeleport = true;
     bool isTeleportingNow = false;
@@ -44,9 +45,14 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(HandleEngineFire());
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        HandleMoving();
+        HandleEngine();        
+    }
+
+    void Update()
+    {        
+        HandleMovementFeatures();
         HandleShooting();
         HandleTeleport();
     }
@@ -96,11 +102,19 @@ public class PlayerController : MonoBehaviour
         isTeleportingNow = false;
     }
 
-    private void HandleMoving()
+    private void HandleEngine()
     {
         if ((Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W)) && !isTeleportingNow)
         {
             rig.AddForce(transform.up * engineForce);
+        }
+    }
+
+    // all about movement except adding force for forward moving
+    private void HandleMovementFeatures()
+    {
+        if ((Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W)) && !isTeleportingNow)
+        {
             isShowEngineFire = true;
 
             if (!engineAudio.isPlaying)
