@@ -134,14 +134,14 @@ public class GameManager : MonoBehaviour
         return newAudio;
     }
 
-    public void PlayExplosionSound()
+    public void HandleObjectExplosion(Collider2D other)
     {
         audioSource.PlayOneShot(explosion);
-    }
-
-    public void InstantiateExplosionParticles(Vector2 position, Quaternion rotation)
-    {
-        Instantiate(explosionParticles, position, rotation);
+        Instantiate(
+            explosionParticles, 
+            other.transform.position, 
+            other.transform.rotation);
+        Destroy(other.gameObject);
     }
 
     private IEnumerator HandleWaves()

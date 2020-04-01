@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerProjectileCollisions : MonoBehaviour
 {
@@ -38,12 +37,8 @@ public class PlayerProjectileCollisions : MonoBehaviour
 
     private void HandleExplosion(Collider2D other)
     {
-        gameManager.InstantiateExplosionParticles(
-            other.transform.position, 
-            other.transform.rotation);
-        gameManager.PlayExplosionSound();
         HandleScore(other);
-        Destroy(other.gameObject);
+        gameManager.HandleObjectExplosion(other);
         Destroy(gameObject);
     }
 
