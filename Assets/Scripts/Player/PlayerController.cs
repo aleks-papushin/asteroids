@@ -25,12 +25,23 @@ public class PlayerController : MonoBehaviour
     float fireBlinkingInterval = 0.04f;
     bool isShowEngineFire = false;
 
+    public AudioClip shot;
+    public AudioClip engine;
+    AudioSource gunAudio;
+    AudioSource engineAudio;
+    private bool engineSoundPlaying = false;
+
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
         rig = GetComponent<Rigidbody2D>();
         shipSprite = GetComponent<SpriteRenderer>();
         fireSprite = transform.Find("Fire").GetComponent<SpriteRenderer>();
+
+        gunAudio = AddAudio(0.5f);
+        engineAudio = AddAudio(0.2f);
+        engineAudio.clip = engine;
+
 
         StartCoroutine(HandleEngineFire());
     }
@@ -92,12 +103,19 @@ public class PlayerController : MonoBehaviour
         if ((Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W)) && !isTeleportingNow)
         {
             rig.AddForce(transform.up * engineForce);
-            isShowEngineFire = true;            
+            isShowEngineFire = true;
+
+            if (!engineAudio.isPlaying)
+            {
+                engineAudio.Play();
+            }            
         }
         else if (Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.W))
         {
             isShowEngineFire = false;
             fireSprite.enabled = false;
+
+            engineAudio.Stop();            
         }
 
         transform.Rotate(0, 0, -Input.GetAxis("Horizontal") * rotationSpeed * Time.deltaTime);
@@ -155,6 +173,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Instantiate(projectile, transform.position, transform.rotation);
+            gunAudio.PlayOneShot(shot);
         }
     }
 
@@ -178,5 +197,13 @@ public class PlayerController : MonoBehaviour
 
             fireSprite.enabled = false;            
         }
+    }
+
+    private AudioSource AddAudio(float volume)
+    {
+        var newAudio = gameObject.AddComponent<AudioSource>();
+        newAudio.playOnAwake = false;
+        newAudio.volume = volume;
+        return newAudio;
     }
 }

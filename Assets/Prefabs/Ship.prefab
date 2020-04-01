@@ -152,6 +152,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectile: {fileID: 1285623403344083278, guid: e6a87d3344153f64681261d7271e9794,
     type: 3}
+  shot: {fileID: 8300000, guid: 4e9e3e163a5a8114cbdbdda1b361f888, type: 3}
+  engine: {fileID: 8300000, guid: 82ccd56546e0dea4d9a474fc0f395de7, type: 3}
 --- !u!114 &1283341844976695415
 MonoBehaviour:
   m_ObjectHideFlags: 0
