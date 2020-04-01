@@ -31,6 +31,16 @@ public class PlayerController : MonoBehaviour
     AudioSource gunAudio;
     AudioSource engineAudio;
 
+    public bool IsMovementAllowed
+    {
+        get
+        {
+            return 
+                (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W)) && 
+                !isTeleportingNow;
+        }
+    }
+
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
@@ -104,7 +114,7 @@ public class PlayerController : MonoBehaviour
 
     private void HandleEngine()
     {
-        if ((Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W)) && !isTeleportingNow)
+        if (IsMovementAllowed)
         {
             rig.AddForce(transform.up * engineForce);
         }
@@ -113,7 +123,7 @@ public class PlayerController : MonoBehaviour
     // all about movement except adding force for forward moving
     private void HandleMovementFeatures()
     {
-        if ((Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W)) && !isTeleportingNow)
+        if (IsMovementAllowed)
         {
             isShowEngineFire = true;
 
