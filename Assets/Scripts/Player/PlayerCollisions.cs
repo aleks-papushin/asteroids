@@ -2,12 +2,12 @@
 
 public class PlayerCollisions : MonoBehaviour
 {
-    GameManager game;
+    GameManager gameManager;
     SpawnAsteroids spawner;
 
     void Start()
     {
-        game = FindObjectOfType<GameManager>();
+        gameManager = FindObjectOfType<GameManager>();
         spawner = FindObjectOfType<SpawnAsteroids>();
     }
 
@@ -27,13 +27,15 @@ public class PlayerCollisions : MonoBehaviour
                 spawner.SpawnSmall(2, other.transform.position);
             }
 
+            gameManager.PlayExplosion();
             Destroy(other.gameObject);
-            game.HandlePlayerDamage(GetComponent<Collider2D>());
+            gameManager.HandlePlayerDamage(GetComponent<Collider2D>());
         }
         else if (other.CompareTag("Ufo_big") || other.CompareTag("Ufo_small"))
         {
+            gameManager.PlayExplosion();
             Destroy(other.gameObject);
-            game.HandlePlayerDamage(GetComponent<Collider2D>());
+            gameManager.HandlePlayerDamage(GetComponent<Collider2D>());
         }
     }
 }

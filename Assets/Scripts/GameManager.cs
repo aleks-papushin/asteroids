@@ -11,6 +11,9 @@ public class GameManager : MonoBehaviour
     SpawnAsteroids asteroidsSpawner;
     SpawnUfo ufoSpawner;
 
+    public AudioClip explosion;
+    AudioSource audioSource;
+
     public GameObject titleScreen;
     public GameObject gameOverScreen;
     public TextMeshProUGUI scoreTextMesh;
@@ -28,7 +31,7 @@ public class GameManager : MonoBehaviour
     Camera cam;
 
     private int Lives { get; set; }
-    private const int initLifesCount = 1;
+    private const int initLifesCount = 3;
     private int score;
     private const int bonusScoreIncrement = 3000;
     private int addLifeOn = bonusScoreIncrement;    
@@ -40,6 +43,8 @@ public class GameManager : MonoBehaviour
         gameOverScreen.SetActive(false);
 
         Instantiate(player, Vector2.zero, Quaternion.identity);
+
+        audioSource = this.AddAudio(gameObject, 0.5f);
 
         asteroidsSpawner = FindObjectOfType<SpawnAsteroids>();
         ufoSpawner = FindObjectOfType<SpawnUfo>();
@@ -126,6 +131,11 @@ public class GameManager : MonoBehaviour
         newAudio.playOnAwake = false;
         newAudio.volume = volume;
         return newAudio;
+    }
+
+    public void PlayExplosion()
+    {
+        audioSource.PlayOneShot(explosion);
     }
 
     private IEnumerator HandleWaves()
@@ -228,7 +238,7 @@ public class GameManager : MonoBehaviour
         // 1 is for big ufo, 2 is for small one
         public static int[][] ufoProbabilities = new int[10][]
         {
-            new int[] {1,1,1,1,1,2,2,2,2,2},
+            new int[] {1,1,1,1,1,1,1,1,1,1},
             new int[] {1,1,1,1,1,1,1,1,1,2},
             new int[] {1,1,1,1,1,1,1,2,2,2},
             new int[] {1,1,1,1,1,1,2,2,2,2},
