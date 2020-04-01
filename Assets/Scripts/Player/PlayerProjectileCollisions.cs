@@ -27,18 +27,19 @@ public class PlayerProjectileCollisions : MonoBehaviour
                 spawner.SpawnSmall(2, other.transform.position);
             }
 
-            gameManager.PlayExplosion();
-            HandleScore(other);
-            Destroy(other.gameObject);
-            Destroy(gameObject);
+            HandleExplosion(other);
         }
         else if (otherTag.Contains("Ufo"))
         {
-            gameManager.PlayExplosion();
-            HandleScore(other);
-            Destroy(other.gameObject);
-            Destroy(gameObject);
+            HandleExplosion(other);
         }
+    }
+
+    private void HandleExplosion(Collider2D other)
+    {
+        HandleScore(other);
+        gameManager.HandleObjectExplosion(other);
+        Destroy(gameObject);
     }
 
     private void HandleScore(Collider2D other)
