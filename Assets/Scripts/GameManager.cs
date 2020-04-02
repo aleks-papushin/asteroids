@@ -154,8 +154,9 @@ public class GameManager : MonoBehaviour
 
             if (GetAsteroidsCount() <= 0 && GetUfoCount() <= 0)
             {
+                CurrentWaveNum++;
                 yield return new WaitForSeconds(timeoutBeforeNextWave);
-                this.SpawnNewWave(CurrentWaveNum++);
+                this.SpawnNewWave(CurrentWaveNum);
             }
         }
     }
