@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -194,7 +193,8 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Instantiate(projectile, transform.position, transform.rotation);
+            var projectilePos = transform.position + new Vector3(0, 0, 0.1f); 
+            Instantiate(projectile, projectilePos, transform.rotation);
             gunAudio.PlayOneShot(shot);
         }
     }
